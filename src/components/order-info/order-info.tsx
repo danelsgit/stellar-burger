@@ -3,7 +3,7 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
 import { useSelector } from '../../services/store';
-import { getIngredients } from '../../services/ingredients';
+import { selectIngredients } from '../../services/ingredients';
 import { useParams } from 'react-router-dom';
 import { getOrderByNumberApi } from '../../utils/burger-api';
 
@@ -24,7 +24,7 @@ export const OrderInfo: FC = () => {
     getOrderByNumberApi(id).then((data) => setOrderData(data.orders[0]));
   }, []);
 
-  const ingredients: TIngredient[] = useSelector(getIngredients).ingredients;
+  const ingredients: TIngredient[] = useSelector(selectIngredients).ingredients;
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 

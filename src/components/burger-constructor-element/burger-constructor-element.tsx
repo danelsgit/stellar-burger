@@ -2,44 +2,25 @@ import { FC, memo } from 'react';
 import { BurgerConstructorElementUI } from '@ui';
 import { BurgerConstructorElementProps } from './type';
 import { useDispatch, useSelector } from '../../services/store';
-import { deleteItem } from '../../services/constructor';
+import { deleteItem } from '../../services/ingredientsConstructor';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   clearAll,
-  selectItems,
-  TConstructorState
-} from '../../services/constructor';
+  constructorSelector,
+  ingredientMoveDown,
+  ingredientMoveUp
+} from '../../services/ingredientsConstructor';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
     const dispatch = useDispatch();
-    const { constructorItems } = useSelector(selectItems);
-    const handleMoveDown = (state: TConstructorState) => {
-      const newIngredients = [...state.constructorItems.ingredients];
-      const [movedIngredient] = newIngredients.splice(index, 1);
-      newIngredients.splice(index + 1, 0, movedIngredient);
 
-      return {
-        ...state,
-        constructorItems: {
-          ...state.constructorItems,
-          ingredients: newIngredients
-        }
-      };
+    const handleMoveDown = () => {
+      dispatch(ingredientMoveDown(index));
     };
 
-    const handleMoveUp = (state: TConstructorState) => {
-      const newIngredients = [...state.constructorItems.ingredients];
-      const [movedIngredient] = newIngredients.splice(index, 1);
-      newIngredients.splice(index - 1, 0, movedIngredient);
-
-      return {
-        ...state,
-        constructorItems: {
-          ...state.constructorItems,
-          ingredients: newIngredients
-        }
-      };
+    const handleMoveUp = () => {
+      dispatch(ingredientMoveUp(index));
     };
 
     const handleClose = () => {
@@ -51,8 +32,8 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
         ingredient={ingredient}
         index={index}
         totalItems={totalItems}
-        handleMoveUp={() => handleMoveUp(useSelector(selectItems))}
-        handleMoveDown={() => handleMoveDown(useSelector(selectItems))}
+        handleMoveUp={handleMoveUp}
+        handleMoveDown={handleMoveDown}
         handleClose={handleClose}
       />
     );

@@ -9,6 +9,11 @@ import { BurgerConstructorUIProps } from './type';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorElement, Modal } from '../../../components/index';
 import { Preloader, OrderDetailsUI } from '@ui';
+import {
+  clearAll,
+  constructorSelector,
+  TConstructorState
+} from '../../../services/ingredientsConstructor';
 
 export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   constructorItems,

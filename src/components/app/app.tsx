@@ -28,7 +28,7 @@ import {
   ProtectedRoute
 } from '../index';
 import { useEffect } from 'react';
-import { fetchIngredients } from '../../services/ingredients';
+import { getIngredients } from '../../services/ingredients';
 import { getUser } from '../../services/auth';
 import { Wrapper } from '../ui/pages/wrapper';
 
@@ -39,7 +39,7 @@ const App = () => {
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(fetchIngredients());
+    dispatch(getIngredients());
     dispatch(getUser());
   }, []);
 

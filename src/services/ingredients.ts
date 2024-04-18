@@ -1,24 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '../utils/burger-api';
 import { TIngredient } from '@utils-types';
 
 type TIngredientsState = {
-  isLoading: boolean;
   ingredients: TIngredient[];
+  isLoading: boolean;
   buns: TIngredient[];
   mains: TIngredient[];
   sauces: TIngredient[];
 };
 
 const initialState: TIngredientsState = {
-  isLoading: false,
   ingredients: [],
+  isLoading: false,
   buns: [],
   mains: [],
   sauces: []
 };
 
-export const fetchIngredients = createAsyncThunk(
+export const getIngredients = createAsyncThunk(
   'ingredients/getAll',
   getIngredientsApi
 );
@@ -28,26 +28,27 @@ const ingredientsSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
+    selectIngredients: (state) => state,
     getIngredientById: (state, payload): TIngredient | undefined =>
-      state.ingredients.find((item) => item._id === payload.id),
-    getIngredients: (state) => state
+      state.ingredients.find((item) => item._id === payload.id)
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchIngredients.fulfilled, (state, action) => {
+    builder.addCase(getIngredients.fulfilled, (state, action) => {
       state.isLoading = false;
       state.ingredients = action.payload;
       state.buns = action.payload.filter((item) => item.type === 'bun');
       state.mains = action.payload.filter((item) => item.type === 'main');
       state.sauces = action.payload.filter((item) => item.type === 'sauce');
     }),
-      builder.addCase(fetchIngredients.pending, (state) => {
+      builder.addCase(getIngredients.pending, (state) => {
         state.isLoading = true;
       }),
-      builder.addCase(fetchIngredients.rejected, (state) => {
+      builder.addCase(getIngredients.rejected, (state) => {
         state.isLoading = false;
       });
   }
 });
 
-export const { getIngredients, getIngredientById } = ingredientsSlice.selectors;
-export const reducer = ingredientsSlice.reducer;
+export const { selectIngredients, getIngredientById } =
+  ingredientsSlice.selectors;
+export const ingredientsReducer = ingredientsSlice.reducer;

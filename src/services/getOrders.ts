@@ -26,6 +26,6 @@ export const ordersSlice = createSlice({
   }
 });
 
-export const reducer = ordersSlice.reducer;
+export const ordersReducer = ordersSlice.reducer;
 
 export const { selectOrders } = ordersSlice.selectors;

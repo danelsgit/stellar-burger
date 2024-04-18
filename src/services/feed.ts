@@ -2,7 +2,7 @@ import { getFeedsApi, getOrderByNumberApi } from '../utils/burger-api';
 import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '../utils/types';
 
-export const getFeed = createAsyncThunk('feed/getAll', getFeedsApi);
+export const getFeed = createAsyncThunk('feed/getFeed', getFeedsApi);
 type TFeedsState = {
   orders: TOrder[];
   total: number;
@@ -32,5 +32,5 @@ export const feedSlice = createSlice({
   }
 });
 
-export const reducer = feedSlice.reducer;
+export const feedReducer = feedSlice.reducer;
 export const { selectFeedsOrders, selectFeeds } = feedSlice.selectors;

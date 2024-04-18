@@ -93,5 +93,5 @@ export const authSlice = createSlice({
   }
 });
 
-export const reducer = authSlice.reducer;
+export const authReducer = authSlice.reducer;
 export const { selectUser, selectIsAuth, selectError } = authSlice.selectors;

@@ -4,22 +4,23 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
-import { reducer as authReducer } from './auth';
-import { reducer as feedReducer } from './feed';
-import { reducer as newOrdersReducer } from './newOrders';
-import { reducer as ingredientsReducer } from './ingredients';
-import { reducer as constructorReducer } from './constructor';
-import { reducer as ordersReducer } from './getOrders';
-const rootReducer = combineReducers({
+import { authReducer } from './auth';
+import { newOrderReducer } from './newOrder';
+import { ingredientsReducer } from './ingredients';
+import { constructorReducer } from './ingredientsConstructor';
+import { feedReducer } from './feed';
+import { ordersReducer } from './getOrders';
+
+export const rootReducer = combineReducers({
   auth: authReducer,
   feed: feedReducer,
   orders: ordersReducer,
-  newOrder: newOrdersReducer,
+  newOrder: newOrderReducer,
   ingredients: ingredientsReducer,
-  constructor: constructorReducer
+  ingredientsConstructor: constructorReducer
 });
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });

@@ -2,7 +2,13 @@ import { orderBurgerApi } from '../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
-export const newOrder = createAsyncThunk('newOrder/post', orderBurgerApi);
+export const newOrder = createAsyncThunk(
+  'newOrder/post',
+  async (order: string[]) => {
+    const response = await orderBurgerApi(order);
+    return response;
+  }
+);
 
 type TNewOrderState = {
   orderRequest: boolean;
@@ -42,5 +48,5 @@ const newOrderSlice = createSlice({
 });
 
 export const { clearOrder } = newOrderSlice.actions;
-export const reducer = newOrderSlice.reducer;
+export const newOrderReducer = newOrderSlice.reducer;
 export const { selectNewOrders } = newOrderSlice.selectors;
