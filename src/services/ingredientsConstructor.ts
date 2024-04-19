@@ -20,21 +20,26 @@ export const constructorSlice = createSlice({
   name: 'ingredientsConstructor',
   initialState,
   reducers: {
-    addItem: (state, action) => {
-      if (action.payload.type === 'bun') {
-        state.constructorItems.bun = { ...action.payload, id: uuidv4() };
-      } else {
-        state.constructorItems.ingredients.push({
-          ...action.payload,
-          id: uuidv4()
-        });
+    addItem: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        if (action.payload.type === 'bun') {
+          state.constructorItems.bun = action.payload;
+        } else {
+          state.constructorItems.ingredients.push(action.payload);
+        }
+      },
+      prepare: (ingredient: TIngredient) => {
+        const id = uuidv4();
+        return { payload: { ...ingredient, id } };
       }
     },
     deleteItem: (state, action) => {
-      state.constructorItems.ingredients =
-        state.constructorItems.ingredients.filter(
-          (item) => item._id !== action.payload
-        );
+      const matchingItemIndex = state.constructorItems.ingredients.findIndex(
+        (item) => item._id === action.payload
+      );
+      if (matchingItemIndex !== -1) {
+        state.constructorItems.ingredients.splice(matchingItemIndex, 1);
+      }
     },
     clearAll: (state) => (state = initialState),
 
