@@ -15,8 +15,7 @@ type TNewOrderState = {
   order: null | TOrder;
   name: string;
 };
-
-const initialState: TNewOrderState = {
+export const initialState: TNewOrderState = {
   orderRequest: false,
   order: null,
   name: ''
